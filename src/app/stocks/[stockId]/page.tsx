@@ -1,12 +1,16 @@
-import RevenueTable from '@/components/taiwan-stocks/detail/table';
-import { Container } from '@mui/material';
+import { Container, Stack } from '@mui/material';
 import React from 'react';
 
+import MouthRevenueChart from '@/components/taiwan-stocks/detail/chart';
+import RevenueTable from '@/components/taiwan-stocks/detail/table';
 
 const Page = async () => {
   return (
     <Container maxWidth="lg" sx={{ paddingY: '32px' }}>
-      <RevenueTable />
+      <Stack spacing="16px">
+        <MouthRevenueChart />
+        <RevenueTable />
+      </Stack>
     </Container>
   );
 };
