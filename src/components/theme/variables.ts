@@ -5,55 +5,53 @@ import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 const theme = responsiveFontSizes(
   createTheme({
     palette: {
-      mode: 'dark',
+      mode: 'dark', // 深色模式
       primary: {
-        main: '#E50914',
+        main: '#1E88E5', // 深藍色 (金融感)
       },
       secondary: {
-        main: '#221F1F',
+        main: '#fdd835', // 金色 (強調色)
+      },
+      success: {
+        main: '#00C853', // 綠色 (上漲)
+      },
+      error: {
+        main: '#D32F2F', // 紅色 (下跌)
       },
       background: {
-        default: '#141414',
-        paper: '#221F1F',
+        default: '#121212', // 深灰色背景
+        paper: '#1C1C1C', // 卡片背景
       },
       text: {
-        primary: '#FFFFFF',
-        secondary: '#B3B3B3',
+        primary: '#E0E0E0', // 主要文字顏色
+        secondary: '#BDBDBD', // 次要文字顏色
       },
+      divider: '#424242', // 分隔線顏色
     },
     typography: {
-      fontFamily: "'Roboto', 'Arial', sans-serif",
-      h1: { fontSize: '3rem', fontWeight: 700 },
-      h2: { fontSize: '2.5rem', fontWeight: 700 },
-      h3: { fontSize: '2rem', fontWeight: 600 },
-      body1: { fontSize: '1rem', color: '#E5E5E5' },
-      button: {
-        textTransform: 'none',
-        fontWeight: 'bold',
-      },
+      fontFamily: "'Inter', 'Roboto', 'Arial', sans-serif", // 現代專業感
+      fontSize: 14,
+      h1: { fontSize: '2rem', fontWeight: 700 },
+      h2: { fontSize: '1.75rem', fontWeight: 700 },
+      h3: { fontSize: '1.5rem', fontWeight: 600 },
+      button: { textTransform: 'none', fontWeight: 600 },
     },
     components: {
-      MuiAppBar: {
-        styleOverrides: {
-          root: ({ ownerState, theme }) => ({
-            backgroundColor: '#1F1F1F',
-            backgroundImage: 'initial',
-          }),
-        },
-      },
       MuiButton: {
-        defaultProps: {
-          disableRipple: true,
+        styleOverrides: {
+          root: {
+            borderRadius: 8,
+            padding: '10px 20px',
+          },
         },
       },
-      MuiButtonBase: {
-        defaultProps: {
-          disableRipple: true,
-        },
-      },
-      MuiIconButton: {
-        defaultProps: {
-          disableRipple: true,
+      MuiCard: {
+        styleOverrides: {
+          root: {
+            borderRadius: 12,
+            backgroundColor: '#1C1C1C',
+            boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)',
+          },
         },
       },
       MuiLink: {
@@ -61,17 +59,6 @@ const theme = responsiveFontSizes(
           root: ({ ownerState, theme }) => {
             return {
               textDecoration: 'none',
-            };
-          },
-        },
-      },
-      MuiCardContent: {
-        styleOverrides: {
-          root: ({ ownerState, theme }) => {
-            return {
-              '&:last-child': {
-                paddingBottom: '16px',
-              },
             };
           },
         },

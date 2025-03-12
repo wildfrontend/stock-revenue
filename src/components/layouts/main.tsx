@@ -11,16 +11,9 @@ const MainLayout: React.FC<PropsWithChildren> = ({ children }) => {
         <Toolbar style={{ justifyContent: 'space-between', height: '64px' }}>
           <Link href={pagePath.home}>
             <Typography component="div" variant="h6">
-              Movie Datebase
+              台股資訊
             </Typography>
           </Link>
-          <Button
-            LinkComponent={Link}
-            color="inherit"
-            href={pagePath.watchlist}
-          >
-            待看清單
-          </Button>
         </Toolbar>
       </AppBar>
       <Box

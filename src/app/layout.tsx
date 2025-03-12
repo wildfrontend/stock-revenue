@@ -4,24 +4,17 @@ import type { Metadata } from 'next';
 import type { PropsWithChildren } from 'react';
 import React from 'react';
 
-import logoCover from '@/assets/logo/conver.png';
 import MainLayout from '@/components/layouts/main';
 import ReactQueryProvider from '@/components/react-query/provider';
 import MuiThemeProvider from '@/components/theme';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://movie-theater-demo.vercel.app'),
   title: {
-    template: 'The Movie Database - %s',
-    default: 'The Movie Database - Explore the World of Movies',
+    template: '台灣股市資訊 - %s',
+    default: '台灣股市資訊 - 探索台灣股票與投資的世界',
   },
   description:
-    'Discover comprehensive movie information, reviews, and details on your favorite films.',
-  openGraph: {
-    images: {
-      url: logoCover.src,
-    },
-  },
+    '發現深入的台灣股市數據、公司表現、趨勢與專家分析，幫助您做出明智的投資決策。',
 };
 
 const RootLayout: React.FC<PropsWithChildren> = ({ children }) => {
