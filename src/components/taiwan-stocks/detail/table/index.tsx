@@ -13,11 +13,16 @@ import { useParams } from 'next/navigation';
 import numberal from 'numeral';
 
 import { useFetchTWMounthRevenue } from '@/apis/stock/api';
+import { useMemo } from 'react';
+import { formatMouthRevenue, generateYoY } from '@/utils/stocks/revenue';
 
 const RevenueTable: React.FC = () => {
   const { stockId } = useParams<{ stockId: string }>();
-  const { revenue } = useFetchTWMounthRevenue(stockId);
-
+  const { data } = useFetchTWMounthRevenue(stockId);
+  const revenue = useMemo(
+    () => generateYoY(formatMouthRevenue([...(data?.data ?? [])])),
+    [data]
+  );
   return (
     <Paper sx={{ width: '100%' }}>
       <TableContainer sx={{ maxHeight: 440 }}>

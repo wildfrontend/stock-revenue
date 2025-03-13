@@ -30,7 +30,7 @@ export const generateYoY = (mouthRevenue: RevenueItem[]) => {
     }
     return {
       ...item,
-      yoy_growth: yoyGrowth?.toFixed(2), // 原始數值 (可能為負)
+      yoy_growth: Number(yoyGrowth?.toFixed(2)) ?? 0, // 原始數值 (可能為負)
       yoy_growth_formatted: yoyGrowthFormatted, // 格式化為 "+x.xx%" or "-x.xx%"
     };
   });
