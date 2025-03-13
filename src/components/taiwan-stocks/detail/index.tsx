@@ -60,11 +60,11 @@ const SotckDetail: React.FC<{ stock: StockItem }> = ({ stock }) => {
   }
   return (
     <Stack spacing="16px">
-      <Box display="flex" justifyContent="space-between" alignItems="center">
+      <Box alignItems="center" display="flex" justifyContent="space-between">
         <Typography
-          sx={{ float: 'left' }}
           component="div"
           gutterBottom
+          sx={{ float: 'left' }}
           variant="h6"
         >
           {stock.stock_name}-{stock.stock_id} 月營收
@@ -72,14 +72,14 @@ const SotckDetail: React.FC<{ stock: StockItem }> = ({ stock }) => {
         <FormControl sx={{ float: 'right' }}>
           <InputLabel id="date-select-label">時間範圍</InputLabel>
           <Select
-            size="small"
-            labelId="date-select-label"
             id="demo-simple-select"
-            value={timeRange}
             label="Age"
+            labelId="date-select-label"
             onChange={(e) => {
               setTimeRange(e.target.value as number);
             }}
+            size="small"
+            value={timeRange}
           >
             <MenuItem value={5}>近5年</MenuItem>
             <MenuItem value={10}>近10年</MenuItem>

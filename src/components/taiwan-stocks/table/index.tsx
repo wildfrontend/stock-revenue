@@ -19,7 +19,7 @@ import {
   TableRow,
   TextField,
 } from '@mui/material';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { useFetchTaiwanStocks } from '@/apis/stock/api';
 import { StockItem } from '@/types/apis/stock';
@@ -90,7 +90,7 @@ const TaiwanStockTable: React.FC = () => {
   }, [search, page]);
 
   return (
-    <Paper component={Stack} spacing="16px" padding="8px">
+    <Paper component={Stack} padding="8px" spacing="16px">
       <TextField
         fullWidth
         label="搜尋股票"

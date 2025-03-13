@@ -71,8 +71,8 @@ const MouthRevenueChart: React.FC<{ mouthRevenue: MouthRevenueItem[] }> = ({
           <YAxis
             domain={[minYoY, maxYoY]}
             orientation="right"
-            yAxisId="yoy_growth"
             tickFormatter={simplifyYoY}
+            yAxisId="yoy_growth"
           />
           <YAxis
             domain={[minRevenue, maxRevenue]}
