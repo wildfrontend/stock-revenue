@@ -22,6 +22,10 @@ export type RevenueItem = {
   revenue_year: number; // 收入年份
 };
 
+export type MouthRevenueItem = RevenueItem & {
+  yoy_growth: number;
+};
+
 export type GetTWMonthRevenueResponse = {
   msg: string; // 回應訊息
   status: number; // 回應狀態碼

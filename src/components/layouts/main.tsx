@@ -1,4 +1,4 @@
-import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material';
+import { AppBar, Box, Toolbar, Typography } from '@mui/material';
 import Link from 'next/link';
 import type { PropsWithChildren } from 'react';
 

@@ -9,24 +9,29 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
-import { useParams } from 'next/navigation';
 import numberal from 'numeral';
-
-import { useFetchTWMounthRevenue } from '@/apis/stock/api';
 import { useMemo } from 'react';
-import { formatMouthRevenue, generateYoY } from '@/utils/stocks/revenue';
 
-const RevenueTable: React.FC = () => {
-  const { stockId } = useParams<{ stockId: string }>();
-  const { data } = useFetchTWMounthRevenue(stockId);
+import { MouthRevenueItem } from '@/types/apis/stock';
+import { formatYoyGrowth } from '@/utils/stocks/revenue';
+
+const RevenueTable: React.FC<{ mouthRevenue: MouthRevenueItem[] }> = ({
+  mouthRevenue,
+}) => {
   const revenue = useMemo(
-    () => generateYoY(formatMouthRevenue([...(data?.data ?? [])])),
-    [data]
+    () =>
+      mouthRevenue.sort((a, b) => {
+        if (b.revenue_year !== a.revenue_year) {
+          return b.revenue_year - a.revenue_year;
+        }
+        return b.revenue_month - a.revenue_month;
+      }),
+    [mouthRevenue]
   );
   return (
     <Paper sx={{ width: '100%' }}>
       <TableContainer sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label="sticky table">
+        <Table aria-label="sticky table" stickyHeader>
           <TableHead>
             <TableRow>
               <TableCell>年份</TableCell>
@@ -49,7 +54,7 @@ const RevenueTable: React.FC = () => {
                   <TableCell>
                     {numberal(item.revenue).format('$1,000')}
                   </TableCell>
-                  <TableCell>{item.yoy_growth_formatted ?? 'NA'}</TableCell>
+                  <TableCell>{formatYoyGrowth(item.yoy_growth)}</TableCell>
                   <TableCell>{item.date}</TableCell>
                 </TableRow>
               );

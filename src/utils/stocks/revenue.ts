@@ -1,13 +1,16 @@
 import { RevenueItem } from '@/types/apis/stock';
 
-// 照日期從新到舊排序，新增月營收年增率
-export const formatMouthRevenue = (mouthRevenue: RevenueItem[]) => {
-  return mouthRevenue.sort((a, b) => {
-    if (b.revenue_year !== a.revenue_year) {
-      return b.revenue_year - a.revenue_year;
-    }
-    return b.revenue_month - a.revenue_month;
-  });
+export const formatYoyGrowth = (value: number) => {
+  if (isNaN(value)) return 'NA';
+  return (
+    new Intl.NumberFormat('en-US', {
+      signDisplay: 'exceptZero', // 🔹 只有正數才加 "+", 負數正常顯示
+      maximumFractionDigits: 2, // 🔹 兩位小數
+    }).format(value) + '%'
+  );
+};
+const convertYOY = (curRevenue: number, prevRevenue: number) => {
+  return ((curRevenue - prevRevenue) / prevRevenue) * 100;
 };
 
 export const generateYoY = (mouthRevenue: RevenueItem[]) => {
@@ -20,18 +23,12 @@ export const generateYoY = (mouthRevenue: RevenueItem[]) => {
   const updatedData = mouthRevenue.map((item) => {
     const prevYearKey = `${item.revenue_year - 1}-${item.revenue_month}`;
     const prevRevenue = revenueMap.get(prevYearKey);
-
-    let yoyGrowth: number | null = null;
-    let yoyGrowthFormatted: string | null = null;
-
-    if (prevRevenue) {
-      yoyGrowth = ((item.revenue - prevRevenue) / prevRevenue) * 100;
-      yoyGrowthFormatted = `${yoyGrowth > 0 ? '+' : ''}${yoyGrowth.toFixed(2)}%`; // 保留兩位小數
-    }
+    const yoyGrowth: number = prevRevenue
+      ? convertYOY(item.revenue, prevRevenue)
+      : NaN;
     return {
       ...item,
-      yoy_growth: Number(yoyGrowth?.toFixed(2)) ?? 0, // 原始數值 (可能為負)
-      yoy_growth_formatted: yoyGrowthFormatted, // 格式化為 "+x.xx%" or "-x.xx%"
+      yoy_growth: yoyGrowth, // 原始數值 (可能為負)
     };
   });
   return updatedData;

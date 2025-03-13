@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
 
-import { formatMouthRevenue, generateYoY } from '@/utils/stocks/revenue';
+import { MouthRevenueItem } from '@/types/apis/stock';
+import { generateYoY } from '@/utils/stocks/revenue';
 
 import {
   twStocksMonthRevenueQueryOptions,
@@ -15,8 +16,8 @@ export const useFetchTaiwanStocks = () => {
 
 export const useFetchTWMounthRevenue = (stockId: PathParamId) => {
   const query = useQuery(twStocksMonthRevenueQueryOptions(stockId));
-  const revenue = useMemo(
-    () => generateYoY(formatMouthRevenue([...(query.data?.data ?? [])])),
+  const revenue: MouthRevenueItem[] = useMemo(
+    () => generateYoY([...(query.data?.data ?? [])]),
     [query.data]
   );
   return { ...query, revenue };
