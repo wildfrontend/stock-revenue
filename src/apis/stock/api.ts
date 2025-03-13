@@ -14,8 +14,11 @@ export const useFetchTaiwanStocks = () => {
   return { ...query, stocks: query.data?.data ?? [] };
 };
 
-export const useFetchTWMounthRevenue = (stockId: PathParamId) => {
-  const query = useQuery(twStocksMonthRevenueQueryOptions(stockId));
+export const useFetchTWMounthRevenue = (
+  stockId: PathParamId,
+  timeRange: number
+) => {
+  const query = useQuery(twStocksMonthRevenueQueryOptions(stockId, timeRange));
   const revenue: MouthRevenueItem[] = useMemo(
     () => generateYoY([...(query.data?.data ?? [])]),
     [query.data]

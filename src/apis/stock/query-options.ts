@@ -22,7 +22,20 @@ export const twStocksQueryOptions = queryOptions({
   },
 });
 
-export const twStocksMonthRevenueQueryOptions = (stockId: PathParamId) =>
+function getStartDate(timeRange: number) {
+  const currentDate = dayjs();
+  const startDate = currentDate.subtract(timeRange + 1, 'year');
+  const minDate = dayjs('2002-02-01');
+  if (startDate.isBefore(minDate)) {
+    return '2002-02-01';
+  }
+  return startDate.format('YYYY-MM-DD');
+}
+
+export const twStocksMonthRevenueQueryOptions = (
+  stockId: PathParamId,
+  timeRange: number
+) =>
   queryOptions({
     queryKey: [
       'stocks',
@@ -30,6 +43,7 @@ export const twStocksMonthRevenueQueryOptions = (stockId: PathParamId) =>
       'revenue',
       'month',
       stockId ? `${stockId}` : undefined,
+      timeRange,
     ],
     queryFn: async ({ signal }) => {
       const res = await axios.get<GetTWMonthRevenueResponse>('/data', {
@@ -38,7 +52,7 @@ export const twStocksMonthRevenueQueryOptions = (stockId: PathParamId) =>
           dataset: 'TaiwanStockMonthRevenue',
           data_id: stockId,
           token: appConfig.finmind.apiToken,
-          start_date: dayjs().subtract(6, 'year').format('YYYY-MM-DD'),
+          start_date: getStartDate(timeRange),
         },
       });
       return res.data;

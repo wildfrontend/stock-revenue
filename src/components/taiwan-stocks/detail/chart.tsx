@@ -26,6 +26,10 @@ const simplifyRevenue = (money: number) => {
   return numeral(money).format('1,000');
 };
 
+const simplifyYoY = (yoy: number) => {
+  return formatYoyGrowth(yoy);
+};
+
 // 🔹 Tooltip 格式化
 const formatTooltipValue = (value: number, name: string) => {
   if (name === '年增率') return formatYoyGrowth(value);
@@ -68,6 +72,7 @@ const MouthRevenueChart: React.FC<{ mouthRevenue: MouthRevenueItem[] }> = ({
             domain={[minYoY, maxYoY]}
             orientation="right"
             yAxisId="yoy_growth"
+            tickFormatter={simplifyYoY}
           />
           <YAxis
             domain={[minRevenue, maxRevenue]}

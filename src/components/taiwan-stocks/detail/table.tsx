@@ -29,7 +29,7 @@ const RevenueTable: React.FC<{ mouthRevenue: MouthRevenueItem[] }> = ({
     [mouthRevenue]
   );
   return (
-    <Paper sx={{ width: '100%' }}>
+    <Paper sx={{ width: '100%' }} variant="outlined">
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table aria-label="sticky table" stickyHeader>
           <TableHead>

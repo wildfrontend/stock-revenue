@@ -19,12 +19,12 @@ import {
   TableRow,
   TextField,
 } from '@mui/material';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { useFetchTaiwanStocks } from '@/apis/stock/api';
 import { StockItem } from '@/types/apis/stock';
 
-import SotckDetail from '../detail';
+import StockDetail from '../detail';
 
 const StockRow: React.FC<{ stock: StockItem }> = ({ stock }) => {
   const [open, setOpen] = useState(false);
@@ -57,7 +57,7 @@ const StockRow: React.FC<{ stock: StockItem }> = ({ stock }) => {
         <TableCell colSpan={6} style={{ paddingBottom: 0, paddingTop: 0 }}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
-              <SotckDetail stock={stock} />
+              <StockDetail stock={stock} />
             </Box>
           </Collapse>
         </TableCell>
@@ -70,16 +70,24 @@ const rowsPerPage = 10;
 const TaiwanStockTable: React.FC = () => {
   const { stocks, isFetching } = useFetchTaiwanStocks();
   const [page, setPage] = useState(0);
-
   const [search, setSearch] = useState('');
 
+  // 🔹 計算過濾後的資料
   const filteredRows = useMemo(() => {
+    if (!search) return stocks;
+    const lowerSearch = search.toLowerCase();
     return stocks.filter(
       (stock) =>
-        stock.stock_name.toLowerCase().includes(search.toLowerCase()) ||
+        stock.stock_name.toLowerCase().includes(lowerSearch) ||
         stock.stock_id.includes(search)
     );
   }, [stocks, search]);
+
+  useEffect(() => {
+    if (page !== 0) {
+      setPage(0);
+    }
+  }, [search, page]);
 
   return (
     <Paper component={Stack} spacing="16px" padding="8px">
@@ -87,9 +95,6 @@ const TaiwanStockTable: React.FC = () => {
         fullWidth
         label="搜尋股票"
         onChange={(e) => {
-          if (page !== 0) {
-            setPage(0);
-          }
           setSearch(e.target.value);
         }}
         placeholder="輸入股票代碼或是股票名稱"
